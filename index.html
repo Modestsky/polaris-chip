@@ -14,16 +14,43 @@
       margin: 0;
       padding: 0;
       font-family: sans-serif;
-      background-color: #ededed;
+      background-color: #1F2224;
+      color: white;
     }
     polaris-chip {
       margin: 16px;
     }
+
+    .controls-wrapper {
+      background-color: rgb(119,10,90);
+      color: rgb(51,167,255);
+      font-size: 20px;
+      padding: 12px;
+      display: block;
+      margin: auto;
+      text-align: center;
+    }
+
+    .ctrl-btn-style{
+        background-color: gray;
+        color: cyan;
+        font-size: 20px;
+        padding: 12px;
+        margin: auto;
+        text-align: center;
+        border-radius: 25px;
+    }
+    
+    #card-format {
+        display: inline-flex;
+    }
+
   </style>
   <title>polaris-chip / my-card</title>
 </head>
 
 <body>
+  
   <h1>polaris-chip</h1>
   <!-- this is going to do whatever the tag's defaults are -->
   <polaris-chip title="News of Record" link="https://hax.psu/"></polaris-chip>
@@ -32,15 +59,70 @@
   <polaris-chip title="Grants and Donations"></polaris-chip>
 
   <h1>my-card</h1>
-  <my-card websiteLink="https://hax.psu.edu"></my-card>
-  <my-card imageLink="https://www.paulbarrs.com/wp-content/uploads/2017/09/life-website-designer.jpg"></my-card>
-  <my-card cardTitle="Card Title Number 3"></my-card>
-  <my-card welcomeTitle="WELCOME TO THE PENULTIMATE CARD!" cardTitle="AHHHHHHHHHHHHHHHH" imageLink="https://i.makeagif.com/media/6-24-2021/9abHr2.gif"></my-card>
-  <my-card welcomeTitle="This Card has all Properties Modified." imageLink="https://hookagency.com/wp-content/uploads/2021/10/web-design-meme-18.jpeg" cardTitle="This Class Hard" websiteLink="https://www.youtube.com/watch?v=RvBwypGUkPo"></my-card>
+  
+  <div class="controls-wrapper">
+    <h2>Modify the cards with these buttons below</h2>
+      <button class="ctrl-btn-style" id="duplicate">Clone Card</button>
+      <button class="ctrl-btn-style" id="changetitle">Change title</button>
+      <button class="ctrl-btn-style" id="changeimage">Change image</button>
+      <button class="ctrl-btn-style" id="changebg">Change background</button>
+      <button class="ctrl-btn-style" id="delete">Delete card</button>
+  </div>
+
+  <div id="card-format">
+    <div class="card">
+      <my-card id="card-title" websiteLink="https://hax.psu.edu"></my-card>
+      <my-card imageLink="https://images.pexels.com/photos/358457/pexels-photo-358457.jpeg">
+        <p>Cool stuff here <strong>Things</strong></p>
+        <p>Regular text: <i>italic text</i></p>
+      </my-card>
+      <my-card fancy imageLink="https://pbs.twimg.com/media/E3f2HMpUYAUrYr8.jpg"></my-card>
+      <my-card imageLink="https://www.paulbarrs.com/wp-content/uploads/2017/09/life-website-designer.jpg"></my-card>
+      <my-card cardTitle="Card Title Number 3"></my-card>
+      <my-card welcomeTitle="WELCOME TO THE PENULTIMATE CARD!" cardTitle="AHHHHHHHHHHHHHHHH" imageLink="https://i.makeagif.com/media/6-24-2021/9abHr2.gif"></my-card>
+      <my-card welcomeTitle="This Card has all Properties Modified." imageLink="https://hookagency.com/wp-content/uploads/2021/10/web-design-meme-18.jpeg" cardTitle="This Class Hard" websiteLink="https://www.youtube.com/watch?v=RvBwypGUkPo"></my-card>
+    </div>
+  </div>
 
   <!-- this is what is bringing in the definition for this tag -->
   <script type="module" src="./src/polaris-chip.js"></script>
   <script type="module" src="./src/my-card.js"></script>
+
+  <script>
+    document.querySelector('#duplicate').addEventListener('click', function(event) {
+      const newCard = document.querySelector('#card-format .card').cloneNode(true);
+      document.querySelector("#card-format").appendChild(newCard);
+    });
+
+    document.getElementById('changetitle').addEventListener("click", function() {
+      document.getElementById('card-title').cardTitle = "Dank Memes";
+    });
+
+    document.getElementById('changeimage').addEventListener("click", function() {
+      document.getElementById('card-title').imageLink = "https://y.yarn.co/67c0eb66-9a50-4dc5-9da1-940069ca38ab_text.gif";
+    });
+
+    let count = 0;
+    document.querySelector("#changebg").addEventListener('click', function(e)
+    {
+      if (count % 2 == 1)
+      {
+        document.querySelector(".card").style.backgroundColor = "lightcoral";
+      }
+      else
+      {  
+        document.querySelector(".card").style.backgroundColor = "teal";
+      }
+      count++;
+    });
+
+    document.querySelector("#delete").addEventListener('click', function(e) {
+    console.log(document.querySelectorAll('.card').length);
+      if (document.querySelectorAll('.card').length !== 1) {
+        document.querySelector('.card').remove();
+      }
+    })
+  </script>
 </body>
 
 </html>

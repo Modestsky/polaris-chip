@@ -20,27 +20,38 @@ export class MyCard extends LitElement {
   constructor() {
     super();
     this.cardTitle = "Web Design IST 256";
-    this.websiteLink = "#";
+    this.websiteLink = "https://dns.google";
     this.imageLink = "https://pbs.twimg.com/media/DzrYahjXQAE44Sd.jpg";
     this.welcomeTitle = "Here is my card assignment";
+    this.fancy = false;
+    this.description = "Ever get frusturated formatting, designing, and adding HTMl/CSS elements to web pages? Hop on over to hax.psu.edu which allows even the most average of laymen such as myself to design web elements without issues and hours of frustration.";
+    this.flavorText = "";
   }
-
+  
   static get styles() {
     return css`
       :host {
         display: block;
       }
-      
-      #card-format {
+
+      :host([fancy]) {
+        display: block;
+        background-color: #5C000B;
+        border: 2px solid fuchsia;
+        box-shadow: 10px 5px 5px red;
       }
       
       h1 {
         text-align: center;
       }
+      
+      #card-format {
+      }
+
       .p {
         text-align: left;
         font-family: sans-serif;
-        margin: 50px;
+        margin: 5px;
       }
       
       .btn {
@@ -50,6 +61,7 @@ export class MyCard extends LitElement {
         padding: 12px;
         display: block;
         margin: auto;
+        margin-top: 16px;
         width: 70px;
         text-align: center;
       }
@@ -87,44 +99,68 @@ export class MyCard extends LitElement {
       }
       
       .card {
-        color: yellow;
+        color: blue;
         width: 400px;
         margin: 16px;
         padding: 12px;
         background-color: black;
         display: inline-block;
+        border-radius: 25px;
+        min-height: 600px;
       }
       
+      details summary {
+        text-align: left;
+        font-size: 20px;
+        padding: 8px 0;
+      }
+    
+      details[open] summary {
+        font-weight: bold;
+      }
+      
+      details div {
+        border: 2px solid yellow;
+        text-align: left;
+        padding: 8px;
+        height: 70px;
+        overflow: auto;
+      }
     `;
+  }
+  
+  openChanged(e) {
+    console.log(e.newState);
+    if (e.newState === "open") {
+      this.fancy = true;
+    }
+    else {
+      this.fancy = false;
+    }
   }
 
   render() {
     return html`
     <h1 class="assignment-title">${this.welcomeTitle}</h1>
-
-    <div class="controls-wrapper">
-    <h2>Modify the card with these buttons below</h2>
-      <button id="duplicate">Clone Card</button>
-      <button id="changetitle">Change title</button>
-      <button id="changeimage">Change image</button>
-      <button id="changebg">Change background</button>
-      <button id="delete">Delete card</button>
-    </div>
     
-    <div id="card-format">
       <div class="card">
       <h1 id="card-title">
-      ${this.cardTitle} 
+      ${this.cardTitle}
       </h1>
-      
+
       <img class="card-image" alt="A funny meme" src="${this.imageLink}" style="width: 300px; display: block; margin: auto;">
       
-      <p class="p">Ever get frusturated formatting, designing, and adding HTMl/CSS elements to web pages? Hop on over to hax.psu.edu which allows even the most average of laymen such as myself to design web elements without issues and hours of frustration.</p>
+      <details ?open="${this.fancy}" @toggle="${this.openChanged}">
+        <summary>Description</summary>
+          <div>
+            <p class="p"><slot>${this.description}</slot></p>
+            <p><slot>${this.flavorText}</slot></p>
+          </div>
+      </details>
       
       <a href="${this.websiteLink}"
         <button class="btn">Details</button>
       </a>
-    </div>
     </div>
     `;
   }
@@ -135,6 +171,9 @@ export class MyCard extends LitElement {
       websiteLink: { type: String },
       imageLink: { type: String },
       welcomeTitle: { type: String },
+      fancy: { type: Boolean, reflect: true },
+      description: { type: String },
+      flavorText: { type: String },
     };
   }
 }
