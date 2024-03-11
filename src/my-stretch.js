@@ -7,7 +7,12 @@ export class PolarisChip extends LitElement {
   
   constructor() {
     super();
-
+    this.title = "Alert";
+    this.alertColor = "yellow";
+    this.paragraph = "Occaecat laboris incididunt ea labore quis in qui commodo velit cillum et commodo. Dolore consectetur eu eu reprehenderit anim fugiat in nostrud anim magna enim nisi. Mollit est incididunt sint aliqua duis. Deserunt ut velit deserunt fugiat eiusmod. Do incididunt laborum aliqua cupidatat adipisicing fugiat reprehenderit cillum id. Minim minim elit occaecat id velit fugiat ea. Aliqua excepteur ea excepteur cillum esse voluptate non elit laboris laboris esse est sunt incididunt ullamco. ";
+    this.linkText = "Penn State";
+    this.link = "https://www.psu.edu";
+    this.date = "MARCH 7, 2024 12:00 AM";
   }
   
   static get styles() {
@@ -17,39 +22,46 @@ export class PolarisChip extends LitElement {
       }
 
       .stretch-wrapper {
-        background-color: #74E291;
+        background-color: white;
         font-size: 20px;
-        padding: 12px;
         display: center;
         margin: auto;
         text-align: center;
       }
 
       .alert-wrapper {
-        background-color: yellow;
+        background-color: #bf8226;
         font-size: 20px;
-        padding: 12px;
         display: center;
+        padding: 15px 15px 0px 0px;
         margin: auto;
         text-align: center;
+        width: 100%;
         position: sticky;
         top: 0;
+        flex-wrap: nowrap;
+        
       }
 
-      .alert {
-        background-color: silver;
+      .alert-container {
+        background-color: yellow;
         font-size: 20px;
-        padding: 12px;
-        display: center;
+        width: 65%;
         margin: auto;
-        text-align: center;
+        display: flex;
+        max-width: 1440px;
+        text-align: left;
+        transform: skew(20deg);
       }
 
-      p {
-
+      .alert-contents {
+        transform: skew(-20deg);
+        padding: 15px 7% 15px 7%;
       }
 
-
+      .date {
+        text-align: left;
+      }
     `;
   }
   
@@ -58,22 +70,27 @@ export class PolarisChip extends LitElement {
     <div class="stretch-wrapper">
     
         <details open class="alert-wrapper">
-            <summary>Alert</summary>
+            <summary class="summary">${this.title}</summary>
 
-          <div class="alert">
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas condimentum libero elementum quam tincidunt, id fermentum ligula fringilla. Aenean sit amet bibendum risus, sed feugiat arcu. Aenean auctor est erat, non congue urna ornare test eget. Bold. Italic. Bold italic. Sample link.
-
-  Vivamus lobortis, turpis ac ornare suscipit, nulla eros elementum ante, sit amet euismod lectus elit ut tortor. Sed mi enim, hendrerit nec faucibus et, semper sit amet dolor. Maecenas non dui velit.
+          
+          <div class="date">
+          ${this.date}
           </div>
+
+          <div class="alert-container" background-color: ${this.alertColor};>
+            
+            <div class="alert-contents">
+              <div class ="alert-text">
+                ${this.paragraph}
+                <a href="${this.link}"
+                  <button class="btn">${this.linkText}</button>
+                </a>
+              </div>
+            </div>  
+          </div>
+
         </details>
-        regular text
-        t
-        <br>
-        t
-        <br><br>
-        a
-        <br>
-        b<br><br><br>t<br>t<br>t<br>t<br>t<br>t<br>t<br>t<br>t<br>t<br>t<br>t<br>t<br>t<br>t<br>t<br>t<br>t<br>t<br>t<br>tawdawtawrnwakjrnwakjrwanwa<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>hey look, the sticky alert stuck with the top of the scree nand u can see this and the alert.<br><br><br><br><br><br>c
+        <br><br><br>Test<br><br><br>Sticky<br><br><br>Element<br><br><br><br><br><br><br><br><br>Fin.<br>
     </div>
     `;
   }
@@ -84,6 +101,8 @@ export class PolarisChip extends LitElement {
       paragraph: { type: String },
       linkText: {type: String },
       link: { type : String },
+      alertColor: { type : String },
+      date: { type : String },
     };
   }
 }
