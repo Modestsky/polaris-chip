@@ -1,5 +1,5 @@
 import "@lrnwebcomponents/rpg-character/rpg-character.js";
-//import { DDD } from "@lrnwebcomponents/d-d-d/d-d-d.js";
+import { DDD } from "@lrnwebcomponents/d-d-d/d-d-d.js";
 import { html, css } from "lit";
 
 export class HaxcmsPartyUi extends DDD {
@@ -33,6 +33,10 @@ export class HaxcmsPartyUi extends DDD {
         cursor: pointer;
         transition: background-color 0.3s;
         font-family: "Times New Roman", Times, serif; 
+        }
+
+        .users-panel {
+            display: inline-flex;
         }
 
         .button:hover,
@@ -106,7 +110,7 @@ export class HaxcmsPartyUi extends DDD {
 
     static get properties() {
         return {
-            party: { type: Array, reflect: true },
+            party: { type: Array },
         };
         }
     }

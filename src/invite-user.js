@@ -1,4 +1,5 @@
 import "@lrnwebcomponents/rpg-character/rpg-character.js";
+import { DDD } from "@lrnwebcomponents/d-d-d/d-d-d.js";
 import { LitElement, html, css } from 'lit';
 
 export class InviteUser extends LitElement {
@@ -15,20 +16,17 @@ export class InviteUser extends LitElement {
   static get styles() {
     return css`
       :host {
-        display: flex;
         text-align: center;
       }
 
       .invite-user-container {
         background-color: maroon;
-        width: 1500px;
+        width: 900px;
         border-radius: 25px;
         border: 2px solid #73AD21;
         color: white;
         margin: auto;
         margin-bottom: 50px;
-        font-family: Arial, sans-serif;
-        display: grid;
         padding: 20px;
       }
 
@@ -37,15 +35,9 @@ export class InviteUser extends LitElement {
         border-radius: 8px;
         padding: 20px;
         margin: 20px;
-        display: flex;
+        display: inline-flex;
         max-width: 20%;
         flex-direction: column;
-        align-items: center;
-      }
-
-      .image-placeholder {
-        max-height: 200px;
-        border-radius: 8px;
       }
 
       .character-details {
@@ -72,16 +64,18 @@ export class InviteUser extends LitElement {
   
   render() {
     return html`
-      <div class="invite-user-container">
-        <h2>Invite User</h2>
-        <div class="input-container">
-          <input id="usernameInput" type="text" placeholder="Enter username">
-          <button class="button" @click="${this.addUser}">Add User</button>
-          <!-- this does nothing yet, even if uncommented with the functions -->
-          <!-- <button class="input-button" @click="${this.saveParty}">Save Party</button> -->
+      <confetti-container id="confetti">
+        <div class="invite-user-container">
+          <h2>Invite User</h2>
+          <div class="input-container">
+            <input id="usernameInput" type="text" placeholder="Enter username">
+            <button class="button" @click="${this.addUser}">Add User</button>
+            <button class="input-button" @click="${this.saveParty}">Save Party</button>
+            
+          </div>
+          ${this.userList.map(user => this.renderCharacterCard(user))}
         </div>
-        ${this.userList.map(user => this.renderCharacterCard(user))}
-      </div>
+      </confetti-container>
     `;
   }
 
@@ -91,6 +85,7 @@ export class InviteUser extends LitElement {
         <rpg-character seed="${user}" walking></rpg-character>
         <div class="character-details">${user}</div>
         <button class="delete-button" @click="${() => this.deleteUser(user)}">Delete</button>
+        ${this.userList.map} <!-- Added this before i left, its not printing properly -->
       </div>
     `;
   }
@@ -113,22 +108,21 @@ export class InviteUser extends LitElement {
     }
   }
 
-  // this does nothing yet, (even uncommented) so i'll implement this next time around when i know what im doing and when have time
-  // saveParty(){
-  //   if(this.userparty.length !== 0 && this.userparty.length <= this.partysize){
-  //       this.makeItRain();
-  //   }
-  // }
+  saveParty(){
+    if(this.userList.length !== 0){
+        this.makeItRain();
+    }
+  }
 
-  // makeItRain() {
-  //     import("@lrnwebcomponents/multiple-choice/lib/confetti-container.js").then(
-  //         (module) => {
-  //             setTimeout(() => {
-  //             this.shadowRoot.querySelector("#confetti").setAttribute("popped", "");
-  //             }, 0);
-  //         }
-  //     );
-  // }
+  makeItRain() {
+    import("@lrnwebcomponents/multiple-choice/lib/confetti-container.js").then(
+      (module) => {
+        setTimeout(() => {
+          this.shadowRoot.querySelector("#confetti").setAttribute("popped", "");
+        }, 0);
+      }
+    );
+  }
 }
 
 customElements.define(InviteUser.tag, InviteUser);
