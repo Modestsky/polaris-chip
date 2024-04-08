@@ -26,7 +26,7 @@ export class InviteUser extends LitElement {
         border: 2px solid #73AD21;
         color: white;
         margin: auto;
-        margin-bottom: 50px;
+        margin-bottom: 40px;
         padding: 20px;
       }
 
@@ -38,11 +38,22 @@ export class InviteUser extends LitElement {
         display: inline-flex;
         max-width: 20%;
         flex-direction: column;
+        opacity: 0.9;
+      }
+
+      .character-card:hover {
+        opacity: 1;
       }
 
       .character-details {
         margin-top: 10px;
         color: black;
+      }
+
+      .rpg-character {
+        max-height: 125px;
+        max-width: 100px;
+        margin: auto;
       }
 
       .delete-button {
@@ -59,6 +70,19 @@ export class InviteUser extends LitElement {
       .delete-button:focus {
         background-color: #00ff00;
       }
+
+      .button,
+      .input-button {
+        margin: var(--ddd-spacing-2) var(--ddd-spacing-0);
+        color: var(--ddd-theme-default-keystoneYellow);
+        background-color: var(--ddd-theme-default-slateMaxLight);
+      }
+
+      .button:hover,
+      .button:focus,
+      .input-button:hover {
+        color: var(--ddd-theme-default-red);
+      }
     `;
   }
   
@@ -68,10 +92,9 @@ export class InviteUser extends LitElement {
         <div class="invite-user-container">
           <h2>Invite User</h2>
           <div class="input-container">
-            <input id="usernameInput" type="text" placeholder="Enter username">
+            <input maxlength="10" id="usernameInput" type="text" placeholder="Enter username" @input="${this.filter}">
             <button class="button" @click="${this.addUser}">Add User</button>
             <button class="input-button" @click="${this.saveParty}">Save Party</button>
-            
           </div>
           ${this.userList.map(user => this.renderCharacterCard(user))}
         </div>
@@ -82,14 +105,21 @@ export class InviteUser extends LitElement {
   renderCharacterCard(user) {
     return html`
       <div class="character-card">
-        <rpg-character seed="${user}" walking></rpg-character>
+        <rpg-character class="rpg-character" seed="${user}" walking></rpg-character>
         <div class="character-details">${user}</div>
         <button class="delete-button" @click="${() => this.deleteUser(user)}">Delete</button>
-        ${this.userList.map} <!-- Added this before i left, its not printing properly -->
       </div>
     `;
   }
 
+  filter(e) {
+    const input = e.target;
+    const blackListChar = input.value.replace(/[^a-z0-9]/g, '');
+    if (input.value !== blackListChar) {
+      input.value = blackListChar;
+    }
+  }
+  
   addUser() {
     const input = this.shadowRoot.getElementById('usernameInput');
     const username = input.value.trim();
@@ -108,9 +138,15 @@ export class InviteUser extends LitElement {
     }
   }
 
-  saveParty(){
-    if(this.userList.length !== 0){
-        this.makeItRain();
+  saveParty() {
+    if(this.userList.length === 0) {
+      alert("Error: No user in party!");
+    }
+
+    if (this.userList.length > 0) {
+      alert("Successfully Saved!");
+      console.log('Party saved:', this.userList);
+      this.requestUpdate();
     }
   }
 
