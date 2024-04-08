@@ -127,6 +127,7 @@ export class InviteUser extends LitElement {
       this.userList.push(username);
       input.value = '';
       this.requestUpdate();
+      
     }
   }
 
