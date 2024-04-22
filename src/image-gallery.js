@@ -34,10 +34,11 @@ export class ImageGallery extends LitElement {
     }
 
     .image-list {
-        display: flex;
+        //try make flex ratios better
+        //display: flex;
+        display: inline;
         justify-content: space-between;
         flex-wrap: wrap;
-        margin-top: 20px;
     }
 
     .image-list img {
@@ -53,23 +54,39 @@ export class ImageGallery extends LitElement {
 
     .slideshow-container {
         display: flex;
-        background-color: gray;
+        justify-content: center;
+        align-items: center;
+        position: fixed;
+        top: 15%;
+        left: 15%;
+        min-width: 70%;
+        min-height: 70%;
+
+        background-color: #000000;
+        border: 2px solid #008cff;
+        border-radius: 50px;
     }
 
     .slideshow-container img {
-        max-width: 80%;
+        max-width: 90%;
         max-height: 80%;
         position: absolute;
+        display: flex;
     }
 
     .close-btn {
         position: absolute;
         top: 20px;
         right: 20px;
-        color: white;
+        color: red;
         font-size: 24px;
         cursor: pointer;
     }
+    
+    .close-btn:hover,
+    .close-btn:focus {
+        background-color: #ff9900;
+      }
     `;
   }
 
@@ -85,7 +102,7 @@ export class ImageGallery extends LitElement {
 
             ${this.showSlideshow ? html`
                 <div class="slideshow-container">
-                    <span class="close-btn" @click="${this.closeSlideshow}">&times;</span>
+                    <button class="close-btn" @click="${this.closeSlideshow}">&times;</button>
                     <img src="${this.images[this.currentImageIndex]}" alt="Gallery Image">
                 </div>
             `:''}
@@ -93,22 +110,18 @@ export class ImageGallery extends LitElement {
     `;
     }
 
-    //this doesnt work yet, and i dont have time to figure it out since i need to hand something in
     openSlideshow(index) {
         this.currentImageIndex = index;
         this.showSlideshow = true;
-
-        //stops scrolling when gallery is open
-        //document.body.style.overflow = 'hidden';
-    }
+        document.body.style.overflow = 'hidden';
+        this.requestUpdate();
+      }
     
-    //doesnt work
-    closeSlideshow() {
+      closeSlideshow() {
         this.showSlideshow = false;
-
-        //resumes scrolling feature
-        //document.body.style.overflow = 'auto';
-    }
+        document.body.style.overflow = 'auto';
+        this.requestUpdate();
+      }
 
 }
 
