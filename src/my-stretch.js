@@ -77,7 +77,7 @@ export class PolarisChip extends LitElement {
           ${this.date}
           </div>
 
-          <div class="alert-container" background-color: ${this.alertColor};>
+          <!-- <div class="alert-container" background-color: ${this.alertColor};>
             
             <div class="alert-contents">
               <div class ="alert-text">
@@ -87,7 +87,7 @@ export class PolarisChip extends LitElement {
                 </a>
               </div>
             </div>  
-          </div>
+          </div> -->
 
         </details>
         <br><br><br>Test<br><br><br>Sticky<br><br><br>Element<br><br><br><br><br><br><br><br><br>Fin.<br>
