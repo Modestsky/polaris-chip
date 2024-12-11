@@ -65,6 +65,7 @@
     stroke: rgba(78, 255, 13, 0.3);
     animation: svgAnimation 2.5s linear infinite;
     }
+/*     
     body {
       margin: 0;
       padding: 0;
@@ -98,7 +99,7 @@
     
     #card-format {
         display: inline-flex;
-    }
+    } */
 
   </style>
   <title>eProtfolio-3-IST111S</title>
@@ -209,7 +210,7 @@
         </div>
     </div>
 
-    <script>
+    <!-- <script>
     function openCity(evt, cityName) {
     var i, tabcontent, tablinks;
     tabcontent = document.getElementsByClassName("tabcontent");
@@ -223,7 +224,7 @@
     document.getElementById(cityName).style.display = "block";
     evt.currentTarget.className += " active";
     }
-    </script>
+    </script> -->
     
     </body>
     </html></eProtfolio-3>
@@ -285,6 +286,19 @@
   </div>
 
   <script>
+    function openCity(evt, cityName) {
+    var i, tabcontent, tablinks;
+    tabcontent = document.getElementsByClassName("tabcontent");
+    for (i = 0; i < tabcontent.length; i++) {
+        tabcontent[i].style.display = "none";
+    }
+    tablinks = document.getElementsByClassName("tablinks");
+    for (i = 0; i < tablinks.length; i++) {
+        tablinks[i].className = tablinks[i].className.replace(" active", "");
+    }
+    document.getElementById(cityName).style.display = "block";
+    evt.currentTarget.className += " active";
+    }
     document.querySelector('#duplicate').addEventListener('click', function(event) {
       const newCard = document.querySelector('#card-format .card').cloneNode(true);
       document.querySelector("#card-format").appendChild(newCard);
